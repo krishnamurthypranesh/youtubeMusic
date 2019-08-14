@@ -1,0 +1,50 @@
+{
+  "name": "instagram",
+  "version": "0.0.1",
+  "description": "Electron wrapper for instagram desktop",
+  "main": "src/index.js",
+  "license": "MIT",
+  "author": "Mik <Mik1337@users.noreply.github.com>",
+  "scripts": {
+    "start": "electron -r babel-register src/.",
+    "dist:linux": "electron-builder --linux"
+  },
+  "repository": "https://github.com/Mik1337/instagram.git",
+  "keywords": [
+    "Electron",
+    "Instagram",
+    "social",
+    "media",
+    "desktop"
+  ],
+  "babel": {
+    "presets": [
+      "env",
+      "stage-3"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "electron": "^6.0.1",
+    "electron-builder": "^21.2.0"
+  },
+  "build": {
+    "execuableName": "instagram",
+    "appId": "com.mik.instagram",
+    "productName": "instagram",
+    "linux": {
+      "target": [
+        "rpm",
+        "deb",
+        "snap",
+	"AppImage"
+      ],
+      "category": "Application"
+    },
+    "mac": {
+      "category": "Application"
+    }
+  }
+}
