@@ -9,14 +9,9 @@ This is an electron wrapper written around instagram for desktop users.
 
 # Download for Linux x64
 
-### Debian based .deb package
-[instagram.deb]()
+### AppImage
+[instagram.AppImage]()
 
-### Redhat, fedora .rpm package
-[instagram.rpm]()
-
-### snap craft
-[instagram.snap]()
 
 
 ### Compile the code and run it; like a real hek boi
