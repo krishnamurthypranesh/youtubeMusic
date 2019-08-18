@@ -1,18 +1,12 @@
-// import { app, BrowserWindow, Menu, shell } from "electron";
-// import { autoUpdater } from "electron-updater";
-// import { log } from "electron-log";
-// can't get beble to wrok :(
-const app = require("electron").app;
-const BrowserWindow = require("electron").BrowserWindow;
-const Menu = require("electron").Menu;
-const shell = require("electron").shell;
-const autoUpdater = require("electron-updater").autoUpdater;
+const { app, BrowserWindow, Menu, shell } = require("electron");
+const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
 
 const userAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1";
 let MenuBarState = false;
 let instagramWindow = null;
+let fullScreenState = false;
 
 const menuTemplate = [
   {
@@ -46,7 +40,14 @@ const menuTemplate = [
       {
         label: "Tablet Sized",
         click: () => {
-          instagramWindow.setSize(768, 1024);
+          instagramWindow.setSize(768, 612);
+        }
+      },
+      {
+        label: "Full Screen",
+        click: () => {
+          fullScreenState = !fullScreenState;
+          instagramWindow.setFullScreen(fullScreenState);
         }
       }
     ]
@@ -85,14 +86,40 @@ const createWindow = () => {
     title: "Instagram",
     icon: `${__dirname}/assests/icon.png`,
     autoHideMenuBar: true,
-    devTools: true,
     textAreasAreResizable: false,
     titleBarStyle: "hidden",
-    transparent: true
+    transparent: true,
+    resizable: false,
   });
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
+  // instagramWindow.webContents.insertCSS(`
+  //   ."_9eogI _01nki IyyUN UOFwJ" {
+  //     width: 375 !important;
+  //     height: 612 !important;
+  //   }
+  // `);
   instagramWindow.webContents.on("before-input-event", (event, input) => {
+    console.log(input);
+    // exit full screen mode
+    if (fullScreenState && input.code === "Escape") {
+      fullScreenState = !fullScreenState;
+      instagramWindow.setFullScreen(fullScreenState);
+    }
+    // open dev tools
+    if (
+      input.type === "keyDown" &&
+      (input.shift || input.meta) &&
+      input.key.toLowerCase() === "i"
+    ) {
+      instagramWindow.toggleDevTools();
+    }
+    if (
+      (input.control || input.meta) &&
+      (input.key.toLowerCase() === "q" || input.key.toLowerCase() === "w")
+    ) {
+      app.quit();
+    }
     // Show menubar when left alt is pressed
     if (input.type === "keyDown" && input.code === "AltLeft") {
       MenuBarState = !MenuBarState;
@@ -139,7 +166,7 @@ app.on("activate", () => {
   }
 });
 
-// Auto Update handlers ^~^
+// Auto Update handlers ^~^ probably not gonna finish this part
 
 const sendStatusToWindow = text => {
   log.info(text);
