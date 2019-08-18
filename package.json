@@ -9,9 +9,9 @@
     "start": "electron src/",
     "pack": "electron-builder -r babel-register --dir",
     "postinstall": "electron-builder install-app-deps",
-    "dist:linux": "electron-builder --linux",
-    "dist:mac": "electron-builder --x64 --mac",
-    "dist:win": "electron-builder --win"
+    "dist:linux": "electron-builder --linux -p always",
+    "dist:mac": "electron-builder --x64 --mac -p always",
+    "dist:win": "electron-builder --win -p always"
   },
   "repository": "https://github.com/Mik1337/instagram.git",
   "keywords": [
@@ -39,14 +39,17 @@
     "linux": {
       "synopsis": "Instagram Desktop App",
       "target": [
-        "snap",
         "AppImage"
       ],
       "category": "Application"
     },
-    "publish": {
-      "provider": "github"
-    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "mik",
+        "repo": "https://github.com/Mik1337/instagram.git"
+      }
+    ],
     "mac": {
       "category": "public.app-category.social-networking"
     },
