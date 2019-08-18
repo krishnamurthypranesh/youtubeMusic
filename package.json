@@ -6,8 +6,12 @@
   "license": "MIT",
   "author": "Mik <Mik1337@users.noreply.github.com>",
   "scripts": {
-    "start": "electron -r babel-register src/.",
-    "dist:linux": "electron-builder --linux"
+    "start": "electron src/",
+    "pack": "electron-builder -r babel-register --dir",
+    "postinstall": "electron-builder install-app-deps",
+    "dist:linux": "electron-builder --linux",
+    "dist:mac": "electron-builder --x64 --mac",
+    "dist:win": "electron-builder --win"
   },
   "repository": "https://github.com/Mik1337/instagram.git",
   "keywords": [
@@ -17,34 +21,39 @@
     "media",
     "desktop"
   ],
-  "babel": {
-    "presets": [
-      "env",
-      "stage-3"
-    ]
-  },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-3": "^6.24.1",
     "electron": "^6.0.1",
     "electron-builder": "^21.2.0"
   },
+  "dependencies": {
+    "electron-log": "^3.0.7",
+    "electron-updater": "^4.1.2"
+  },
   "build": {
-    "execuableName": "instagram",
     "appId": "com.mik.instagram",
     "productName": "instagram",
+    "files": [
+      "./build/**/*",
+      "./src/index.js"
+    ],
     "linux": {
+      "synopsis": "Instagram Desktop App",
       "target": [
-        "rpm",
-        "deb",
         "snap",
-	"AppImage"
+        "AppImage"
       ],
       "category": "Application"
     },
+    "publish": {
+      "provider": "github"
+    },
     "mac": {
-      "category": "Application"
+      "category": "public.app-category.social-networking"
+    },
+    "win": {
+      "publish": [
+        "github"
+      ]
     }
   }
 }

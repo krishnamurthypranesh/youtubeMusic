@@ -1,6 +1,13 @@
-import { app, BrowserWindow, Menu, shell } from "electron";
-import { autoUpdater } from "electron-updater";
-import { log } from "electron-log";
+// import { app, BrowserWindow, Menu, shell } from "electron";
+// import { autoUpdater } from "electron-updater";
+// import { log } from "electron-log";
+// can't get beble to wrok :(
+const app = require("electron").app;
+const BrowserWindow = require("electron").BrowserWindow;
+const Menu = require("electron").Menu;
+const shell = require("electron").shell;
+const autoUpdater = require("electron-updater").autoUpdater;
+const log = require("electron-log");
 
 const userAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1";
@@ -76,7 +83,7 @@ const createWindow = () => {
     height: 612,
     backgroundColor: "#F5F5F5",
     title: "Instagram",
-    icon: `${__dirname}/assests/logo.png`,
+    icon: `${__dirname}/assests/icon.png`,
     autoHideMenuBar: true,
     devTools: true,
     textAreasAreResizable: false,
