@@ -45,6 +45,17 @@ const menuTemplate = [
     ]
   },
   {
+    label: "Control",
+    submenu: [
+      {
+        label: "Refresh",
+        click: () => {
+          instagramWindow.reload();
+        }
+      }
+    ]
+  },
+  {
     label: "Report",
     submenu: [
       {
