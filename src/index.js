@@ -89,18 +89,11 @@ const createWindow = () => {
     textAreasAreResizable: false,
     titleBarStyle: "hidden",
     transparent: true,
-    resizable: false,
+    resizable: false
   });
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
-  // instagramWindow.webContents.insertCSS(`
-  //   ."_9eogI _01nki IyyUN UOFwJ" {
-  //     width: 375 !important;
-  //     height: 612 !important;
-  //   }
-  // `);
   instagramWindow.webContents.on("before-input-event", (event, input) => {
-    console.log(input);
     // exit full screen mode
     if (fullScreenState && input.code === "Escape") {
       fullScreenState = !fullScreenState;
@@ -142,9 +135,9 @@ const createWindow = () => {
         console.error(`error desu: ${error}`);
       }
     }
-    instagramWindow.webContents.setIgnoreMenuShortcuts(
-      !input.control && !input.meta
-    );
+    // instagramWindow.webContents.setIgnoreMenuShortcuts(
+    //   !input.control && !input.meta
+    // );
   });
   instagramWindow.setMenuBarVisibility(MenuBarState);
   instagramWindow.loadURL("https://www.instagram.com/", { userAgent });

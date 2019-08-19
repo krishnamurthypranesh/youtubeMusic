@@ -13,7 +13,10 @@
     "dist:mac": "electron-builder --x64 --mac -p always",
     "dist:win": "electron-builder --win -p always"
   },
-  "repository": "https://github.com/Mik1337/instagram.git",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Mik1337/instagram.git"
+  },
   "keywords": [
     "Electron",
     "Instagram",
@@ -46,8 +49,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "mik",
-        "repo": "https://github.com/Mik1337/instagram.git"
+        "owner": "Mik1337",
+        "repo": "https://github.com/Mik1337/instagram"
       }
     ],
     "mac": {
