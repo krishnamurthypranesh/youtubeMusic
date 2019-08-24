@@ -84,7 +84,7 @@ const createWindow = () => {
     height: 612,
     backgroundColor: "#F5F5F5",
     title: "Instagram",
-    icon: `${__dirname}/assests/icon.png`,
+    icon: `${__dirname}/../icons/icon.png`,
     autoHideMenuBar: true,
     textAreasAreResizable: false,
     titleBarStyle: "hidden",
