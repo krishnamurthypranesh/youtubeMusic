@@ -2,9 +2,8 @@
 This is an electron wrapper written around YouTube Music for desktop users.
 
 # Inspiration
-Inspired by https://github.com/Mik1337/instagram
-
-This is a GG idea. I really need a YTMusic app for myself.
+Inspired by https://github.com/Mik1337/instagram (This is a GG idea).
+I really need a YTMusic app for myself.
 
 I'mma just be converting the original instagram app to a YT app.
 
