@@ -20,3 +20,8 @@ Welp, don't go selling this. Pliss.
 # Not Official
 This project is not official. I'm making this for me and someother kindred spirits. 
 Then again, this is better than what Google is currently offerring (nothing).
+
+
+# To-do
+
+* Make app play music in background.

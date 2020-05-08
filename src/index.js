@@ -5,18 +5,18 @@ const log = require("electron-log");
 const userAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1";
 let MenuBarState = false;
-let instagramWindow = null;
-let fullScreenState = false;
+let ytMusicWindow = null;
+let fullScreenState = true;
 
 const menuTemplate = [
   {
-    label: "Instagram",
+    label: "YouTubeMusic",
     submenu: [
       {
         label: "Share",
         click: async () => {
           await shell.openExternal(
-            "https://github.com/Mik1337/instagram/blob/master/README.md"
+            "https://github.com/krishnamurthypranesh/youtubeMusic/blob/master/README.md"
           );
         }
       },
@@ -34,20 +34,20 @@ const menuTemplate = [
       {
         label: "Phone Sized",
         click: () => {
-          instagramWindow.setSize(375, 612);
+          ytMusicWindow.setSize(375, 612);
         }
       },
       {
         label: "Tablet Sized",
         click: () => {
-          instagramWindow.setSize(768, 612);
+          ytMusicWindow.setSize(768, 612);
         }
       },
       {
         label: "Full Screen",
         click: () => {
           fullScreenState = !fullScreenState;
-          instagramWindow.setFullScreen(fullScreenState);
+          ytMusicWindow.setFullScreen(fullScreenState);
         }
       }
     ]
@@ -58,7 +58,7 @@ const menuTemplate = [
       {
         label: "Refresh",
         click: () => {
-          instagramWindow.reload();
+          ytMusicWindow.reload();
         }
       }
     ]
@@ -70,7 +70,7 @@ const menuTemplate = [
         label: "Be a snitch",
         click: async () => {
           await shell.openExternal(
-            "https://help.instagram.com/165828726894770/"
+            "https://support.google.com/youtubemusic/?hl=en#topic=6277001"
           );
         }
       }
@@ -79,25 +79,27 @@ const menuTemplate = [
 ];
 
 const createWindow = () => {
-  instagramWindow = new BrowserWindow({
+  ytMusicWindow = new BrowserWindow({
     width: 375,
     height: 612,
-    backgroundColor: "#F5F5F5",
-    title: "Instagram",
+    backgroundColor: "#121111",
+    title: "YouTubeMusic",
     icon: `${__dirname}/../icons/icon.png`,
     autoHideMenuBar: true,
     textAreasAreResizable: false,
-    titleBarStyle: "hidden",
+    titleBarStyle: "default",
     transparent: true,
-    resizable: false
+    resizable: true
   });
+  ytMusicWindow.setMinimizable(true);
+
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
-  instagramWindow.webContents.on("before-input-event", (event, input) => {
+  ytMusicWindow.webContents.on("before-input-event", (event, input) => {
     // exit full screen mode
     if (fullScreenState && input.code === "Escape") {
       fullScreenState = !fullScreenState;
-      instagramWindow.setFullScreen(fullScreenState);
+      ytMusicWindow.setFullScreen(fullScreenState);
     }
     // open dev tools
     if (
@@ -105,7 +107,7 @@ const createWindow = () => {
       (input.shift || input.meta) &&
       input.key.toLowerCase() === "i"
     ) {
-      instagramWindow.toggleDevTools();
+      ytMusicWindow.toggleDevTools();
     }
     if (
       (input.control || input.meta) &&
@@ -116,13 +118,13 @@ const createWindow = () => {
     // Show menubar when left alt is pressed
     if (input.type === "keyDown" && input.code === "AltLeft") {
       MenuBarState = !MenuBarState;
-      instagramWindow.setMenuBarVisibility(MenuBarState);
+      ytMusicWindow.setMenuBarVisibility(MenuBarState);
     }
     // When enter is pressed, send message
     if (input.type === "keyDown" && input.key === "Enter" && !input.shift) {
       try {
         // DM || Story
-        instagramWindow.webContents.executeJavaScript(`
+        ytMusicWindow.webContents.executeJavaScript(`
           elements = document.getElementsByClassName('_0mzm- sqdOP yWX7d');
           console.log(elements);
           if (elements.length) {
@@ -135,14 +137,11 @@ const createWindow = () => {
         console.error(`error desu: ${error}`);
       }
     }
-    // instagramWindow.webContents.setIgnoreMenuShortcuts(
-    //   !input.control && !input.meta
-    // );
   });
-  instagramWindow.setMenuBarVisibility(MenuBarState);
-  instagramWindow.loadURL("https://www.instagram.com/", { userAgent });
-  instagramWindow.on("close", () => {
-    instagramWindow = null;
+  ytMusicWindow.setMenuBarVisibility(MenuBarState);
+  ytMusicWindow.loadURL("https://music.youtube.com/", { userAgent });
+  ytMusicWindow.on("close", () => {
+    ytMusicWindow = null;
   });
 };
 app.on("ready", createWindow);
@@ -163,8 +162,8 @@ app.on("activate", () => {
 
 const sendStatusToWindow = text => {
   log.info(text);
-  if (instagramWindow) {
-    instagramWindow.webContents.send("message", text);
+  if (ytMusicWindow) {
+    ytMusicWindow.webContents.send("message", text);
   }
 };
 
